@@ -1,3 +1,5 @@
+import requests
+
 def find_empty(puzzel):
     for row in range(9):
         for col in range(9):
@@ -8,7 +10,8 @@ def find_empty(puzzel):
 
 def is_valid(puzzel, guess, row, col):
     # row not valid
-    if guess in puzzel[row]:
+    row_val = puzzel[row]
+    if guess in row_val:
         return False
 
     # col not valid:
@@ -40,10 +43,31 @@ def solve_sudoku(puzzel):
         # If guess is valid, then set value and recursively call value
         if is_valid(puzzel, guess, row, col):
             puzzel[row][col] = guess
-            solve_sudoku(puzzel)
+            if solve_sudoku(puzzel): 
+                return True
 
         # for backtracking; reset guessed value
         puzzel[row][col] = -1
 
     return False
 
+
+board = [
+    [2, -1, -1,   -1, 9, 4,    -1, -1, 1],
+    [-1, 6, -1,   -1, -1, -1,  -1, 3, -1],
+    [1, 5, -1,    6, -1, 7,    -1, -1, -1],
+
+    [-1, 1, 2,    5, 4, 8,     6, -1, 7],
+    [-1, 8, 9,    2, -1, 6,    1, 4, 3],
+    [-1, 4, 7,    -1, -1, -1,  -1, 5, -1],
+
+    [4, -1, -1,   9, -1, -1,   -1, -1, -1],
+    [-1, -1, -1,  -1, 6, 5,    3, 2, -1],
+    [-1, 2, -1,   -1, -1, -1,  9, -1, 6]
+]
+
+print(solve_sudoku(board))
+for i in range(9):
+    print(board[i])
+    if (i + 1) % 3 == 0:
+        print(" ")
