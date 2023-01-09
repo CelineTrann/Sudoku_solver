@@ -51,6 +51,25 @@ def solve_sudoku(puzzel):
 
     return False
 
+def print_board(board):
+    board_str = ""
+    for r in range(9):
+        for c in range(9):
+            val = f"{board[r][c]} "
+            if board[r][c] == -1:
+                val = f"_ "
+
+            if c == 8:
+                val += "\n"
+                if (r + 1) % 3 == 0:
+                    val += "\n"
+
+            elif (c + 1) % 3 == 0:
+                val += "\t"
+
+            board_str += val
+    
+    print(board_str)
 
 board = [
     [2, -1, -1,   -1, 9, 4,    -1, -1, 1],
@@ -66,8 +85,7 @@ board = [
     [-1, 2, -1,   -1, -1, -1,  9, -1, 6]
 ]
 
+print_board(board)
+            
 print(solve_sudoku(board))
-for i in range(9):
-    print(board[i])
-    if (i + 1) % 3 == 0:
-        print(" ")
+print_board(board)
